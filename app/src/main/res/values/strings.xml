@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">하루리뷰</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_add">+</string>
+    <string name="lorem_ipsum">dd</string>
+    <string name="fragment_frist">오늘은</string>
+    <string name="dot">.</string>
+    <string name="fragment_frist_last">날짜가 맞다면 왼쪽으로</string>
+    <string name="fragment_frist_end">넘겨주세요! :D</string>
+    <string name="fragment_second_start">오늘의 날씨는</string>
+    <string name="fragment_second_middle">어땠나요?</string>
+    <string name="fragment_second_son">•화창했어요</string>
+    <string name="fragment_second_rain">•비가 왔어요</string>
+    <string name="fragment_second_cloud">•흐렸어요</string>
+    <string name="fragment_second_snow">•눈이 왔어요</string>
+    <string name="fragment_second_bunge">•번개가 쳤어요</string>
+    <string name="fragment_second_last">날씨가 맞다면 왼쪽으로</string>
+    <string name="fragment_second_end">넘겨주세요! :D</string>
+    <string name="fragment_thrid_q1">주변 사람들</string>
+    <string name="fragment_thrid_q2">과는 어땠나요?</string>
+    <string name="fragment_thrid_q3">직장(학교)은</string>
+    <string name="fragment_thrid_q4">어땠나요?</string>
+    <string name="fragment_thrid_q5">나를 위한 시간을</string>
+    <string name="fragment_thrid_q6">보내셨나요?</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:id="@+id/view_close"
+        app:showAsAction="always"
+        android:title=""
+        android:icon="@drawable/w_close">
+    </item>
+    <item android:title="수정하기"
+        android:icon="@drawable/w_overflow"
+        android:id="@+id/view_update"
+        />
+    <item android:title="삭제하기"
+        android:icon="@drawable/w_overflow"
+        android:id="@+id/view_delete"
+
+        />
+</menu>

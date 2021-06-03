@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <font
+        android:fontStyle = "normal"
+        android:font = "@font/spoqa_han_sans_neo_bold"
+        app:font="@font/spoqa_han_sans_neo_bold"
+        app:fontStyle="normal"
+        />
+    <!--demi light-->
+    <font
+        android:font="@font/spoqa_han_sans_neo_light"
+        android:fontStyle="normal"
+        app:font="@font/spoqa_han_sans_neo_light"
+        app:fontStyle="normal" />
+
+    <!--regular-->
+    <font
+        android:font="@font/spoqa_han_sans_neo_regular"
+        android:fontStyle="normal"
+        app:font="@font/spoqa_han_sans_neo_regular"
+        app:fontStyle="normal"
+ />
+
+    <!--medium-->
+    <font
+        android:fontStyle = "normal"
+        android:font = "@font/spoqa_han_sans_neo_medium"
+        app:font="@font/spoqa_han_sans_neo_medium"
+        app:fontStyle="normal"
+/>
+    <!--thin-->
+    <font
+        android:fontStyle = "normal"
+        android:font = "@font/spoqa_han_sans_neo_thin"
+        android:fontWeight="900"
+        app:font="@font/spoqa_han_sans_neo_thin"
+        app:fontWeight="900"
+        app:fontStyle="normal" />
+</font-family>

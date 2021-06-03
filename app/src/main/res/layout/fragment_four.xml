@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:id="@+id/fragment_four"
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="76dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/indicate_back"></ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/indicate_back"></ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/indicate_back"></ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/w_indicate"></ImageView>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="9">
+    <EditText
+        android:id="@+id/content"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="false"
+        android:hint="오늘 있었던 일을 기록해주세요."
+        android:textSize="16dp"
+        android:textColorHint="@color/w_main_text"
+        android:fontFamily="@font/spoqa_han_sans_neo_light"
+        android:textColor="@color/w_main_text"
+        android:background="@null"
+        ></EditText>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/ibn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="left|center|bottom"
+                android:layout_marginRight="22dp"
+                android:gravity="center"
+                android:background="@drawable/shape"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
+                >
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@null"
+                    android:src="@drawable/w_img"></ImageButton>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="사진 추가"
+                    android:textSize="14dp"
+                    android:textColor="@color/circle"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
+                    ></TextView>
+            </LinearLayout>
+        <FrameLayout
+            android:id="@+id/one_frame"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            android:layout_gravity="bottom"
+            >
+            <ImageView
+                android:id="@+id/first_img"
+                android:background="@drawable/shape2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                ></ImageView>
+
+            <ImageButton
+                android:id="@+id/one_close"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:background="@drawable/circle"
+                android:src="@drawable/pic_close"
+                android:visibility="gone"
+                android:layout_gravity="right|top"
+
+                ></ImageButton>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/two_frame"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            android:layout_gravity="bottom">
+                <ImageView
+                    android:id="@+id/second_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape2"
+                    android:scaleType="fitXY"
+                ></ImageView>
+            <ImageButton
+                android:id="@+id/two_close"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:background="@drawable/circle"
+                android:src="@drawable/pic_close"
+                android:visibility="gone"
+
+                android:layout_gravity="right|top"
+                ></ImageButton>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/three_frame"
+
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            android:layout_gravity="bottom">
+        <ImageView
+            android:id="@+id/third_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape2"
+            android:scaleType="fitXY"
+        ></ImageView>
+            <ImageButton
+                android:id="@+id/three_close"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:background="@drawable/circle"
+                android:src="@drawable/pic_close"
+                android:visibility="gone"
+                android:layout_gravity="right|top"
+                ></ImageButton>
+        </FrameLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="13dp"
+            android:textColor="@color/w_main_text"
+            android:fontFamily="@font/spoqa_han_sans_neo_light"
+            android:text="오늘 하루도 정말">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="13dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/w_main_text"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
+            android:text="수고하셨습니다! :D">
+        </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:background="@color/circle">
+        <Button
+            android:id="@+id/btn1"
+            android:background="@color/circle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
+            android:text="저장하기"
+            android:textSize="18dp">
+        </Button>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#fff</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="Actionbar">#fff</color>
+    <color name="circle">#5673EB</color>
+    <color name="black">#000</color>
+    <color name="grayblack">#999</color>
+    <color name="w_main_text">#404040</color>
+    <color name="ProgressBackground">#d1d1d1</color>
+</resources>
