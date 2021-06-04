@@ -1,11 +1,10 @@
 package com.kykj.haru2;
 
-import androidx.lifecycle.LiveData;
+
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
+
 
 import java.util.List;
 
@@ -28,13 +27,9 @@ public interface TodoDao {
     @Query("UPDATE Todo SET imgname1 = :Imgname1, Imgname2 = :Imgname2, Imgname3 =:Imgname3 where id = :id ")
     void UpdateImg(int id, String Imgname1, String Imgname2, String Imgname3);
 
+    @Query("DELETE FROM Todo")
+    void all_delete();
 
     @Insert
     void insert(Todo todo);
-
-    @Update
-    void update(Todo todo);
-
-    @Delete
-    void delete(Todo todo);
 }

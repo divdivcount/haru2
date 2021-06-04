@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,23 +18,15 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
-
 import me.relex.circleindicator.CircleIndicator;
 
 
@@ -103,7 +94,7 @@ public class View_memo extends AppCompatActivity {
     private void drawImages(String image1, String image2, String image3) {
         int currentImageLength = 0;
         try {
-            if(image1 != null && image2 != null && image2 != null) {
+            if(image1 != null && image2 != null && image3 != null) {
                 currentImageLength = 3;
                 Uri uri1 = Uri.parse(image1);
                 Uri uri2 = Uri.parse(image2);

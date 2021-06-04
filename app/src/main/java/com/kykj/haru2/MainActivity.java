@@ -2,6 +2,7 @@ package com.kykj.haru2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
 
@@ -87,11 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, Setting.class);
             startActivity(intent);
@@ -175,17 +173,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                             //프레임 레이아웃 정하기
-
-//                            System.out.println("----------------------------------------------\n");
-//                            System.out.println(todo.getYear().equals(todo.getYear()));
-//                            System.out.println(todo.getYear());
-//                        System.out.println((todo.getStar_one() + todo.getStar_two() + todo.getStar_three()) / 3.0);
-//                        System.out.println(todo.getStar_one() + todo.getStar_two() + todo.getStar_three());
-//                        System.out.println(todo.getStar_one()+"1");
-//                        System.out.println(todo.getStar_two()+"2");
-//                        System.out.println(todo.getStar_three()+"3");
-//                        System.out.println(todo.getId());
-//                            System.out.println("----------------------------------------------\n");
                             frameLayout = new FrameLayout(this);
                             frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                             FrameLayout.LayoutParams frameLayout_params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -386,4 +373,6 @@ public class MainActivity extends AppCompatActivity {
             toast.cancel();
         }
     }
+
+
 }

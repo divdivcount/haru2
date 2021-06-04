@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#fff</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimaryDark">#fff</color>
+    <color name="colorAccent">#5673EB</color>
     <color name="Actionbar">#fff</color>
     <color name="circle">#5673EB</color>
     <color name="black">#000</color>
