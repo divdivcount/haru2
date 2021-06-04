@@ -16,7 +16,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,6 +23,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -37,10 +37,7 @@ import android.widget.Toast;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -55,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     long backKeyPressedTime = 0;
     Toast toast;
+
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
+            Intent intent = new Intent(this, Setting.class);
+            startActivity(intent);
             return true;
         }else if(id == R.id.add_plus){
             Intent intent = new Intent(this, NoteAdd.class);
@@ -315,30 +317,36 @@ public class MainActivity extends AppCompatActivity {
                 all_linear.addView(frameLayout);
                 all_linear.addView(linear_Text);
                 all_container_linear.addView(all_linear);
+
+
                 //클릭시 View_memo로 id 값을 가져간다. 쿼리로 select 시켜야하기 때문
                 all_linear.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(), View_memo.class);
                         intent.putExtra("View_id", todo.getId());
                         startActivity(intent);
+
                     }
                 });
 
             }catch (Exception e){
                 System.out.println(e);
             }
+
             all_linear.setOnLongClickListener(new View.OnLongClickListener() {
                 //현재 for문에서 만들었던 del_imgButton을 저장
                 final ImageButton del_button = del_imgButton;
+
                 @Override
                 public boolean onLongClick(View view) {
-
                     del_button.setVisibility(View.VISIBLE);
                     Log.d("click","Long");
                     return true;
                 }
             });
+
         }
 
 
@@ -349,10 +357,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //출처 https://dev-imaec.tistory.com/10
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBackPressed() {
+
         // 기존 뒤로가기 버튼의 기능을 막기위해 주석처리 또는 삭제
         // super.onBackPressed();
 
@@ -361,6 +370,7 @@ public class MainActivity extends AppCompatActivity {
         // 2000 milliseconds = 2 seconds
         if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
             backKeyPressedTime = System.currentTimeMillis();
+
             toast = Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
             toast.show();
             return;

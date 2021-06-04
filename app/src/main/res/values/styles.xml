@@ -16,10 +16,8 @@
         <!--점 3개 메뉴 디자인-->
         <item name="android:actionOverflowButtonStyle">@style/AppTheme.OverFlow</item>
         <!--actionbar 버튼 호버 색상-->
-
         <item name="actionBarItemBackground">@drawable/actionbar</item>
         <item name="android:actionBarItemBackground">@drawable/actionbar</item>
-
     </style>
 
     <style name="TextAppearance.Holo.Widget.ActionBar.Menu" parent="@android:style/TextAppearance.Holo.Small">
