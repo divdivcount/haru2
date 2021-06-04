@@ -489,41 +489,8 @@ public class ForFragment extends Fragment {
                         if(imageURI[2] != null) {
                             todo.setImgname3(imageURI[2].toString());
                         }
-                    /* 위 코드로 대체
-                    if(clipData!=null) {
-                        for(int i = 0; i < 3; i++) {
-                            if(i<clipData.getItemCount()) {
-
-                                urione =  clipData.getItemAt(i).getUri();
-//                                    image1.setImageURI(Uri.parse(update_image1));
-//                                    image2.setImageURI(Uri.parse(update_image2));
-//                                    image3.setImageURI(Uri.parse(update_image3));
-
-                                switch (i){
-                                    case 0:
-                                        todo.setImgname1(urione.toString());
-                                        break;
-                                    case 1:
-                                        todo.setImgname2(urione.toString());
-                                        break;
-                                    case 2:
-                                        todo.setImgname3(urione.toString());
-                                        break;
-                                }
-                            }
-                        }
-                    }
-                    else if(uri != null)// 하나만 들어왔을때의 처리
-                    {
-                        todo.setImgname1(uri.toString());
-                    }else if(id > 0){
-                        if(!update_image1.equals("")){
-                            db.todoDao().UpdateImg(id, update_image1,update_image2,update_image3);
-                        }
-                    }
-                    */
-
                         if(id > 0){
+                            // 수정
                             String imageString1 = imageURI[0] != null ? imageURI[0].toString() : null,
                                     imageString2 = imageURI[1] != null ? imageURI[1].toString() : null,
                                     imageString3 = imageURI[2] != null ? imageURI[2].toString() : null;
@@ -534,14 +501,14 @@ public class ForFragment extends Fragment {
                             );
                             db.todoDao().SelectUpdate(id, Weather, (startTotal != 0.0 ? startTotal: 0.0),(startTotal2 != 0.0 ? startTotal2: 0.0),(startTotal3 != 0.0 ? startTotal3: 0.0), content.getText().toString());
                             Toast.makeText(getContext(),"수정되었습니다. :)",Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
+                            //추가
                             db.todoDao().insert(todo);//todo 디비에 입력 시킨다.
                             Toast.makeText(getContext(),"저장되었습니다. :)",Toast.LENGTH_SHORT).show();
                         }
 
-
-
                         Intent intent = new Intent(getActivity().getApplicationContext(), View_memo.class);
+                        intent.putExtra("update_id", id);
                         intent.putExtra("year", Year);
                         intent.putExtra("weather", Weather);
                         intent.putExtra("startTotal", startTotal);
@@ -557,41 +524,6 @@ public class ForFragment extends Fragment {
                         if(imageURI[2] != null) {
                             intent.putExtra("setImgname3", imageURI[2].toString());
                         }
-
-                    /*
-                    if(clipData!=null) {
-                        for(int i = 0; i < 3; i++) {
-                            if(i<clipData.getItemCount()){
-
-                                urione =  clipData.getItemAt(i).getUri();
-
-
-                                switch (i){
-                                    case 0:
-                                            intent.putExtra("setImgname1", urione.toString());
-                                        break;
-                                    case 1:
-
-                                        intent.putExtra("setImgname2", urione.toString());
-
-
-                                        break;
-                                    case 2:
-//                                            if(intent.putExtra("setImgname3", urione.toString()) != null){
-//                                                intent.putExtra("setImgname3", update_image3);
-//                                            }else{
-                                            intent.putExtra("setImgname3", urione.toString());
-//                                            }
-
-                                        break;
-                                }
-                            }
-                        }
-                    } else if(uri != null)// 하나만 들어왔을때의 처리
-                    {
-                        intent.putExtra("setImgname1", uri.toString());
-                    }
-                    */
                         intent.putExtra("content", content.getText().toString());
                         startActivity(intent);
                         getActivity().finish();

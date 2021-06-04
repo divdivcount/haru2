@@ -1,6 +1,5 @@
 package com.kykj.haru2;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -32,6 +31,7 @@ import androidx.room.Room;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -41,22 +41,21 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class View_memo extends AppCompatActivity {
     private AppDatabase db;
+
     TextView view_year ,view_content;
     ImageView view_weather;
     RatingBar start1, start2 , start3;
     Bitmap[] mSelectedPhotoBmp;
-    Activity activity;
-    String imgid , image1 ,image2, image3 , year, weather, content;
-    String sendimgid , sendimage1 ,sendimage2, sendimage3 , sendyear, sendweather, sendcontent;
-    Float q1, q2 ,q3;
-    Float sendq1, sendq2 ,sendq3;
+    String imgid;
+
     long backKeyPressedTime = 0;
     Toast toast;
-    Uri uri1, uri2, uri3;
     LayoutInflater inflater;
     String[] imgCount;
-    int id;
 
+    private int id;
+    private String year, weather, image1, image2, image3, content;
+    private float q1, q2, q3;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +69,9 @@ public class View_memo extends AppCompatActivity {
         start3 = (RatingBar)findViewById(R.id.view_q3);
         db = Room.databaseBuilder(this,AppDatabase.class, "todo-db").allowMainThreadQueries().build();
         try {
-            fetch();
+            if(fetch()) {
+                draw();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,323 +80,191 @@ public class View_memo extends AppCompatActivity {
 
 
     }
-    public void fetch(){
-        Intent intent = getIntent();
-        //만약 id 값이 0이면 아래 코드 실행 0 이상이면 아이디값으로 불러온 쿼리의 값으로 출력해야함
-        id = intent.getIntExtra("View_id", 0);
-        System.out.println(id);
-
-        if(id > 0){
-            List<Todo> list = (List<Todo>) db.todoDao().Selectid(id);
-            for(final Todo todo : list){
-                sendyear = todo.getYear();
-                sendweather = todo.getWeather();
-                sendq1 = todo.getStar_one();
-                sendq2 = todo.getStar_two();
-                sendq3 = todo.getStar_three();
-                sendimage1 = todo.getImgname1();
-                sendimage2 = todo.getImgname2();
-                sendimage3 = todo.getImgname3();
-                sendcontent = todo.getContent();
-
-                view_year.setText(todo.getYear());
-                if (todo.getWeather().equals("화창했어요.")) {
-                    view_weather.setImageResource(R.drawable.w_s_son);
-                } else if (todo.getWeather().equals("비가 왔어요.")) {
-                    view_weather.setImageResource(R.drawable.w_s_rain);
-                } else if (todo.getWeather().equals("흐렸어요.")) {
-                    view_weather.setImageResource(R.drawable.w_s_cloud);
-                } else if (todo.getWeather().equals("눈이 왔어요.")) {
-                    view_weather.setImageResource(R.drawable.w_s_snow);
-                } else if (todo.getWeather().equals("번개가 쳤어요.")) {
-                    view_weather.setImageResource(R.drawable.w_s_bunge);
-                }
-                System.out.println(todo.getImgname1()+"이미지1");
-                System.out.println(todo.getImgname2()+"이미지2");
-                System.out.println(todo.getImgname3()+"이미지3");
-                if(todo.getImgname1() != null) {
-                    try {
-
-                        if (todo.getImgname1() != null && todo.getImgname2() == null && todo.getImgname3() == null) {
-                            imgid = "one_image";
-                            uri1 = Uri.parse(todo.getImgname1());
-                            System.out.println("one_image");
-                            //이미지의 CONTENT://주소를 스트림 주소로 변경
-                            InputStream input = this.getContentResolver().openInputStream(uri1);
-                            //비트맵으로 DECODE
-                            mSelectedPhotoBmp = new Bitmap[]{BitmapFactory.decodeStream(input)};
-                        } else if (todo.getImgname1() != null && todo.getImgname2() != null && todo.getImgname3() == null) {
-                            imgid = "two_image";
-                            System.out.println("two_image");
-                            uri1 = Uri.parse(todo.getImgname1());
-                            uri2 = Uri.parse(todo.getImgname2());
-                            InputStream input = this.getContentResolver().openInputStream(uri1);
-                            InputStream input2 = this.getContentResolver().openInputStream(uri2);
-                            mSelectedPhotoBmp = new Bitmap[]{BitmapFactory.decodeStream(input), BitmapFactory.decodeStream(input2)};
-                        } else if (todo.getImgname1() != null && todo.getImgname2() != null && todo.getImgname3() != null) {
-                            imgid = "three_image";
-                            System.out.println("three_image");
-                            uri1 = Uri.parse(todo.getImgname1());
-                            uri2 = Uri.parse(todo.getImgname2());
-                            uri3 = Uri.parse(todo.getImgname3());
-                            //이미지의 CONTENT://주소를 스트림 주소로 변경
-                            InputStream input = this.getContentResolver().openInputStream(uri1);
-                            InputStream input2 = this.getContentResolver().openInputStream(uri2);
-                            InputStream input3 = this.getContentResolver().openInputStream(uri3);
-
-                            //비트맵으로 DECODE
-                            mSelectedPhotoBmp = new Bitmap[]{BitmapFactory.decodeStream(input), BitmapFactory.decodeStream(input2), BitmapFactory.decodeStream(input3)};
-                            System.out.println(Arrays.toString(mSelectedPhotoBmp));
-                        }else{
-                            System.out.println(todo.getImgname1()+"여기 ?");
-                        }
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
-                    //이미지 슬라이더를 위한 페이지 어뎁터
-                    PagerAdapter pagerAdapter = new PagerAdapter() {
-                        //갯수를 알기 위해 배열에 담는다.
 
 
-
-
-                        @Override
-                        public int getCount() {
-                            if (imgid.equals("one_image")) {
-                                imgCount = new String[]{todo.getImgname1()};
-                            } else if (imgid.equals("two_image")) {
-                                imgCount = new String[]{todo.getImgname1(), todo.getImgname2()};
-                            } else if (imgid.equals("three_image")) {
-                                imgCount = new String[]{todo.getImgname1(), todo.getImgname2(), todo.getImgname3()};
-                            }
-                            return imgCount.length;
-                        }
-
-                        @Override
-                        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-                            return view == ((View) object);
-                        }
-
-                        @NonNull
-                        @Override
-                        public Object instantiateItem(@NonNull ViewGroup container, int position) {
-                            inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                            View view = inflater.inflate(R.layout.slider_image, container, false);
-                            ImageView imageView = view.findViewById(R.id.slider_image);
-                            imageView.setImageBitmap(mSelectedPhotoBmp[position]);
-                            container.addView(view);
-                            return view;
-                        }
-
-                        @Override
-                        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-                            container.invalidate();
-                        }
-                    };
-                    ViewPager viewPager = findViewById(R.id.pager);
-                    viewPager.setAdapter(pagerAdapter);
-                    CircleIndicator indicator;
-                    indicator = findViewById(R.id.indicator);
-                    indicator.setViewPager(viewPager);
-                }else {
-                    LinearLayout img_slider_view = (LinearLayout)findViewById(R.id.img_slider_view);
-                    img_slider_view.setVisibility(View.GONE);
-                }
-                start1.setRating(todo.getStar_one());
-                start2.setRating(todo.getStar_two());
-                start3.setRating(todo.getStar_three());
-                view_content.setText(todo.getContent());
+    private void drawWeather(String weather) {
+        if (weather.equals("화창했어요.")) {
+            view_weather.setImageResource(R.drawable.w_s_son);
+        } else if (weather.equals("비가 왔어요.")) {
+            view_weather.setImageResource(R.drawable.w_s_rain);
+        } else if (weather.equals("흐렸어요.")) {
+            view_weather.setImageResource(R.drawable.w_s_cloud);
+        } else if (weather.equals("눈이 왔어요.")) {
+            view_weather.setImageResource(R.drawable.w_s_snow);
+        } else if (weather.equals("번개가 쳤어요.")) {
+            view_weather.setImageResource(R.drawable.w_s_bunge);
+        }
+    }
+    private void drawRating(float q1, float q2, float q3) {
+        start1.setRating(q1);
+        start2.setRating(q2);
+        start3.setRating(q3);
+    }
+    private void drawImages(String image1, String image2, String image3) {
+        int currentImageLength = 0;
+        try {
+            if(image1 != null && image2 != null && image2 != null) {
+                currentImageLength = 3;
+                Uri uri1 = Uri.parse(image1);
+                Uri uri2 = Uri.parse(image2);
+                Uri uri3 = Uri.parse(image3);
+                //이미지의 CONTENT://주소를 스트림 주소로 변경
+                InputStream input = this.getContentResolver().openInputStream(uri1);
+                InputStream input2 = this.getContentResolver().openInputStream(uri2);
+                InputStream input3 = this.getContentResolver().openInputStream(uri3);
+                //비트맵으로 DECODE
+                mSelectedPhotoBmp = new Bitmap[]{BitmapFactory.decodeStream(input), BitmapFactory.decodeStream(input2), BitmapFactory.decodeStream(input3)};
+            } else if(image1 != null && image2 != null) {
+                currentImageLength = 2;
+                Uri uri1 = Uri.parse(image1);
+                Uri uri2 = Uri.parse(image2);
+                InputStream input = this.getContentResolver().openInputStream(uri1);
+                InputStream input2 = this.getContentResolver().openInputStream(uri2);
+                mSelectedPhotoBmp = new Bitmap[]{BitmapFactory.decodeStream(input), BitmapFactory.decodeStream(input2)};
+            } else if(image1 != null) {
+                currentImageLength = 1;
+                Uri uri1 = Uri.parse(image1);
+                //이미지의 CONTENT://주소를 스트림 주소로 변경
+                InputStream input = this.getContentResolver().openInputStream(uri1);
+                //비트맵으로 DECODE
+                mSelectedPhotoBmp = new Bitmap[]{BitmapFactory.decodeStream(input)};
+            } else {
+                // 이미지가 없으므로 이미지 슬라이더 뷰를 숨기고 종료
+                LinearLayout img_slider_view = (LinearLayout)findViewById(R.id.img_slider_view);
+                img_slider_view.setVisibility(View.GONE);
+                return;
             }
-        }else {
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        final int lastImageLength = currentImageLength;
 
+        //이미지 슬라이더를 위한 페이지 어뎁터
+        PagerAdapter pagerAdapter = new PagerAdapter() {
+            //갯수를 알기 위해 배열에 담는다.
+            final int imageLength = lastImageLength;
+            @Override
+            public int getCount() {
+                /*
+                if (imgid.equals("one_image")) {
+                    imgCount = new String[]{todo.getImgname1()};
+                } else if (imgid.equals("two_image")) {
+                    imgCount = new String[]{todo.getImgname1(), todo.getImgname2()};
+                } else if (imgid.equals("three_image")) {
+                    imgCount = new String[]{todo.getImgname1(), todo.getImgname2(), todo.getImgname3()};
+                }
+                return imgCount.length;*/
+                return imageLength;
+            }
+
+            @Override
+            public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+                return view == ((View) object);
+            }
+
+            @NonNull
+            @Override
+            public Object instantiateItem(@NonNull ViewGroup container, int position) {
+                inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View view = inflater.inflate(R.layout.slider_image, container, false);
+                ImageView imageView = view.findViewById(R.id.slider_image);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY); // 새로 추가/수정 일때만 있엇던 것
+                imageView.setImageBitmap(mSelectedPhotoBmp[position]);
+                container.addView(view);
+                return view;
+            }
+
+            @Override
+            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+                container.invalidate();
+            }
+        };
+        ViewPager viewPager = findViewById(R.id.pager);
+        viewPager.setAdapter(pagerAdapter);
+        CircleIndicator indicator;
+        indicator = findViewById(R.id.indicator);
+        indicator.setViewPager(viewPager);
+    }
+    private List<Todo> getList(int id) {
+        List<Todo> list = (List<Todo>) db.todoDao().Selectid(id);
+        return list;
+    }
+
+    private boolean fetch() {
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("View_id", 0);
+        //만약 id 값이 0이면 Intent에서 정보 추출, 0 이상이면 아이디값으로 불러온 쿼리의 값으로 출력해야함
+        if(id > 0) {
+            this.id = id;
+            List<Todo> list = getList(id);
+            Todo todo = list.get(0);
+            year = todo.getYear();
+            weather = todo.getWeather();
+            q1 = todo.getStar_one();
+            q2 = todo.getStar_two();
+            q3 = todo.getStar_three();
+            image1 = todo.getImgname1();
+            image2 = todo.getImgname2();
+            image3 = todo.getImgname3();
+            content = todo.getContent();
+        } else {
+            this.id = intent.getIntExtra("update_id", 0);
             year = intent.getStringExtra("year");
             weather = intent.getStringExtra("weather");
-            content = intent.getStringExtra("content");
-            image1 = intent.getStringExtra("setImgname1");
-            image2 = intent.getStringExtra("setImgname2");
-            image3 = intent.getStringExtra("setImgname3");
-            System.out.println(image1+"img1");
-//            System.out.println(image2.trim().equals("")); // "" / null
-//            System.out.println(image3.trim() == null);
             q1 = (float) intent.getFloatExtra("startTotal", 0.0f);
             q2 = (float) intent.getFloatExtra("startTotal2", 0.0f);
             q3 = (float) intent.getFloatExtra("startTotal3", 0.0f);
-            view_year.setText(year);
-
-            if (weather.equals("화창했어요.")) {
-                view_weather.setImageResource(R.drawable.w_s_son);
-            } else if (weather.equals("비가 왔어요.")) {
-                view_weather.setImageResource(R.drawable.w_s_rain);
-            } else if (weather.equals("흐렸어요.")) {
-                view_weather.setImageResource(R.drawable.w_s_cloud);
-            } else if (weather.equals("눈이 왔어요.")) {
-                view_weather.setImageResource(R.drawable.w_s_snow);
-            } else if (weather.equals("번개가 쳤어요.")) {
-                view_weather.setImageResource(R.drawable.w_s_bunge);
+            image1 = intent.getStringExtra("setImgname1");
+            image2 = intent.getStringExtra("setImgname2");
+            image3 = intent.getStringExtra("setImgname3");
+            content = intent.getStringExtra("content");
+            if(year == null && weather == null && id == 0) {
+                return false;
             }
-
-            if(image1 == null) {
-                image1 = "";
-            }
-            if(image2 == null) {
-                image2 = "";
-            }
-            if(image3 == null) {
-                image3 = "";
-            }
-
-            if(!image1.equals("")) {
-                System.out.println("씨발");
-                try {
-                    if (!(image1.equals("") || image2.equals("") || image3.equals(""))) {
-
-                        imgid = "three_image";
-                        uri1 = Uri.parse(image1);
-                        uri2 = Uri.parse(image2);
-                        uri3 = Uri.parse(image3);
-                        //이미지의 CONTENT://주소를 스트림 주소로 변경
-                        InputStream input = this.getContentResolver().openInputStream(uri1);
-                        InputStream input2 = this.getContentResolver().openInputStream(uri2);
-                        InputStream input3 = this.getContentResolver().openInputStream(uri3);
-                        //비트맵으로 DECODE
-                        mSelectedPhotoBmp = new Bitmap[]{BitmapFactory.decodeStream(input), BitmapFactory.decodeStream(input2), BitmapFactory.decodeStream(input3)};
-                        System.out.println(image3+"ssibal3");
-
-                    } else if (!(image1.equals("") || image2.equals(""))) {
-
-                        imgid = "two_image";
-                        uri1 = Uri.parse(image1);
-                        uri2 = Uri.parse(image2);
-                        InputStream input = this.getContentResolver().openInputStream(uri1);
-                        InputStream input2 = this.getContentResolver().openInputStream(uri2);
-                        mSelectedPhotoBmp = new Bitmap[]{BitmapFactory.decodeStream(input), BitmapFactory.decodeStream(input2)};
-                        System.out.println(image2+"ssibal2");
-
-                    } else if (!image1.equals("")) {
-
-                        imgid = "one_image";
-                        uri1 = Uri.parse(image1);
-                        //이미지의 CONTENT://주소를 스트림 주소로 변경
-                        InputStream input = this.getContentResolver().openInputStream(uri1);
-                        //비트맵으로 DECODE
-                        mSelectedPhotoBmp = new Bitmap[]{BitmapFactory.decodeStream(input)};
-                        System.out.println(image1+"ssibal");
-                    }
-
-                    System.out.println(uri1);
-                    System.out.println(uri2);
-                    System.out.println(uri3);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-                //이미지 슬라이더를 위한 페이지 어뎁터
-                PagerAdapter pagerAdapter = new PagerAdapter() {
-                    //갯수를 알기 위해 배열에 담는다.
-
-
-                    @Override
-                    public int getCount() {
-                        if (imgid.equals("one_image")) {
-                            imgCount = new String[]{image1};
-                        } else if (imgid.equals("two_image")) {
-                            imgCount = new String[]{image1, image2};
-                        } else if (imgid.equals("three_image")) {
-                            imgCount = new String[]{image1, image2, image3};
-                        }
-                        return imgCount.length;
-                    }
-
-                    @Override
-                    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-                        return view == ((View) object);
-                    }
-
-                    @NonNull
-                    @Override
-                    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-                        inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        View view = inflater.inflate(R.layout.slider_image, container, false);
-                        ImageView imageView = view.findViewById(R.id.slider_image);
-                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                        imageView.setImageBitmap(mSelectedPhotoBmp[position]);
-                        container.addView(view);
-                        return view;
-                    }
-
-                    @Override
-                    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-                        container.invalidate();
-                    }
-                };
-
-
-
-                System.out.println(year);
-                System.out.println(weather);
-                System.out.println(content);
-                System.out.println(q1);
-                System.out.println(q2);
-                System.out.println(q3);
-                System.out.println(image1);
-                System.out.println(image2);
-                System.out.println(image3);
-                ViewPager viewPager = findViewById(R.id.pager);
-                viewPager.setAdapter(pagerAdapter);
-                CircleIndicator indicator;
-                indicator = findViewById(R.id.indicator);
-                indicator.setViewPager(viewPager);
-            }else {
-                LinearLayout img_slider_view = (LinearLayout)findViewById(R.id.img_slider_view);
-                img_slider_view.setVisibility(View.GONE);
-            }
-            start1.setRating(q1);
-            start2.setRating(q2);
-            start3.setRating(q3);
-            view_content.setText(content);
         }
+        return true;
+    }
+    public void draw(){
+        view_year.setText(year);
+        drawWeather(weather);
+        drawImages(image1, image2, image3);
+        drawRating(q1, q2, q3);
+        view_content.setText(content);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.view_menu, menu);
         return true;
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int menu_id = item.getItemId();
-
         if (menu_id == R.id.view_close) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             return true;
-        }else if(menu_id == R.id.view_update){
+        } else if(menu_id == R.id.view_update) {
             //id를 first쪽으로 보낸다
-
-
             Intent intent = new Intent(getApplicationContext(), NoteAdd.class);
-            intent.putExtra("id",id);
-            intent.putExtra("year", sendyear);
-            intent.putExtra("weather", sendweather);
-            intent.putExtra("content", sendcontent);
-            intent.putExtra("q1", sendq1);
-            intent.putExtra("q2", sendq2);
-            intent.putExtra("q3", sendq3);
-            intent.putExtra("image1", sendimage1);
-            intent.putExtra("image2", sendimage2);
-            intent.putExtra("image3", sendimage3);
-
+            intent.putExtra("id", id);
+            intent.putExtra("year", year);
+            intent.putExtra("weather", weather);
+            intent.putExtra("content", content);
+            intent.putExtra("q1", q1);
+            intent.putExtra("q2", q2);
+            intent.putExtra("q3", q3);
+            intent.putExtra("image1", image1);
+            intent.putExtra("image2", image2);
+            intent.putExtra("image3", image3);
             startActivity(intent);
-
         }else if(menu_id == R.id.view_delete){
             db.todoDao().Selectdelete(id);
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             this.finish();
             Toast.makeText(getApplicationContext(),"삭제되었습니다.",Toast.LENGTH_SHORT).show();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
