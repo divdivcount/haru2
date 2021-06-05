@@ -499,7 +499,7 @@ public class ForFragment extends Fragment {
                                     imageString2,
                                     imageString3
                             );
-                            db.todoDao().SelectUpdate(id, Weather, (startTotal != 0.0 ? startTotal: 0.0),(startTotal2 != 0.0 ? startTotal2: 0.0),(startTotal3 != 0.0 ? startTotal3: 0.0), content.getText().toString());
+                            db.todoDao().SelectUpdate(id,Year, Weather, (startTotal != 0.0 ? startTotal: 0.0),(startTotal2 != 0.0 ? startTotal2: 0.0),(startTotal3 != 0.0 ? startTotal3: 0.0), content.getText().toString());
                             Toast.makeText(getContext(),"수정되었습니다. :)",Toast.LENGTH_SHORT).show();
                         } else {
                             //추가
