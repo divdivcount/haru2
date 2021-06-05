@@ -1,7 +1,6 @@
 package com.kykj.haru2;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
+
 
 
 public class Setting extends AppCompatActivity {
@@ -34,7 +34,7 @@ public class Setting extends AppCompatActivity {
         // 툴바의 홈버튼의 이미지를 변경
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
         db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "todo-db").allowMainThreadQueries().build();
-
+        Integer date;
         backup_restore = (LinearLayout)findViewById(R.id.backup_restore);
         export = (LinearLayout)findViewById(R.id.export);
         opinion = (LinearLayout)findViewById(R.id.opinion);
@@ -45,6 +45,13 @@ public class Setting extends AppCompatActivity {
         password = (Switch)findViewById(R.id.password);
         alram = (Switch)findViewById(R.id.alram);
         setting_day = (TextView)findViewById(R.id.setting_day);
+        try {
+             date = db.todoDao().Countselect();
+            setting_day.setText(date.toString());
+        }catch (Exception e){
+            System.out.println("실패");
+            System.out.println(e);
+        }
 
         backup_restore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +88,7 @@ public class Setting extends AppCompatActivity {
             }
         });
 
+        final Integer finalDate = db.todoDao().Countselect();
         all_delete.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -93,14 +101,20 @@ public class Setting extends AppCompatActivity {
                 dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which) {
                         //토스트 메시지
-                        db.todoDao().all_delete();
-                        Toast.makeText(Setting.this,"모든 노트를 삭제했어요! :(",Toast.LENGTH_SHORT).show();
-                        //메인 엑티비티 리무브뷰 해야 합니다.
+                        System.out.println(finalDate);
+                        if(finalDate <= 0){
+                            Toast.makeText(Setting.this,"작성된 노트가 아무것도 없어요 :)",Toast.LENGTH_SHORT).show();
+                        }else{
+                            db.todoDao().all_delete();
+                            Toast.makeText(Setting.this,"모든 노트를 삭제했어요! :(",Toast.LENGTH_SHORT).show();
+                            //메인 엑티비티 리무브뷰 해야 합니다.
 
-                        //이런식으로 하면 삭제시 메인으로 돌아가게 됩니다...
-                        Intent refresh = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(refresh);
-                        Setting.this.finish();
+                            //이런식으로 하면 삭제시 메인으로 돌아가게 됩니다...
+                            Intent refresh = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(refresh);
+                            Setting.this.finish();
+                        }
+
                     }
 
 
@@ -138,6 +152,7 @@ public class Setting extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     @Override

@@ -1,6 +1,9 @@
 package com.kykj.haru2;
 
 
+import android.database.Cursor;
+
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -18,6 +21,9 @@ public interface TodoDao {
     @Query("SELECT * FROM Todo WHERE id = :id")
     List<Todo> Selectid(int id);
 
+    @Query("SELECT * FROM Todo")
+    Cursor getSelectAll();
+
     @Query("DElETE FROM Todo WHERE id = :id")
     void Selectdelete(int id);
 
@@ -26,6 +32,11 @@ public interface TodoDao {
 
     @Query("UPDATE Todo SET imgname1 = :Imgname1, Imgname2 = :Imgname2, Imgname3 =:Imgname3 where id = :id ")
     void UpdateImg(int id, String Imgname1, String Imgname2, String Imgname3);
+
+
+    @Query("SELECT count(id) FROM Todo")
+    Integer Countselect();
+
 
     @Query("DELETE FROM Todo")
     void all_delete();

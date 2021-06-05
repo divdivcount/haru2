@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint({"WrongConstant", "NewApi"})
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void fetch(){
-        Uri uri1;
 
+        Uri uri1;
         List<Todo> list = (List<Todo>) db.todoDao().getAll();
 
         //전체를 감싸는 리스트뷰 혹은 그리드뷰로 혹은 스크롤뷰(리니어로 감싸서 하나로 넣기)
