@@ -116,10 +116,6 @@ public class MainActivity extends AppCompatActivity {
         all_container_linear.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT ,ViewGroup.LayoutParams.WRAP_CONTENT));
         all_container_linear.setOrientation(LinearLayout.VERTICAL);
 
-        SimpleDateFormat sDate1 = new SimpleDateFormat("yyyy.MM.dd");
-        String newDate = sDate1.format(new Date());
-        System.out.println(newDate);
-
         for(final Todo todo : list){
 
             try{

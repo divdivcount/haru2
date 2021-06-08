@@ -50,7 +50,7 @@ public class Setting extends AppCompatActivity {
         alram = (Switch)findViewById(R.id.alram);
         setting_day = (TextView)findViewById(R.id.setting_day);
         try {
-             date = db.todoDao().Countselect();
+            date = db.todoDao().Countselect();
             setting_day.setText(date.toString());
         }catch (Exception e){
             System.out.println("실패");
