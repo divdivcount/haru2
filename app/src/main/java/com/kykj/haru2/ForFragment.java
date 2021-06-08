@@ -55,6 +55,7 @@ public class ForFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
     //@Subscribe(threadMode = ThreadMode.BACKGROUND) 이벤트를 받은 후 백그라운드에서 작업을 실행함
+    //모든 이벤트 버스에서(모든 프레그먼트에서) 값을 받아옴
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void testEvent(FirstFragment.DataEvent event){
         Year = event.helloEventBus;
@@ -80,6 +81,7 @@ public class ForFragment extends Fragment {
     }
 
     //인수로 조각을 만들기위한 newInstance 생성자
+    //내용 수정 및 이미지 수정의 값이 이쪽으로 넘어옵니다.
     public static ForFragment newInstance(
             String page, int id, String content, String image1,
             String image2,String image3
@@ -105,7 +107,7 @@ public class ForFragment extends Fragment {
         } catch (Exception e) {
 
         }
-
+        //수정 이미지 값을 받아오기 위한 작업
         if (getArguments() != null) {
             id = getArguments().getInt("update_id");
             update_content = getArguments().getString("update_content");
@@ -113,19 +115,6 @@ public class ForFragment extends Fragment {
             update_image2 = getArguments().getString("update_image2");
             update_image3 = getArguments().getString("update_image3");
 
-
-// CharSequence
-//            ClipData.Item item1 = new ClipData.Item(Uri.parse(update_image1));
-//            ClipData.Item item2 = new ClipData.Item(Uri.parse(update_image2));
-//            ClipData.Item item3 = new ClipData.Item(Uri.parse(update_image3));
-//            String[] mimeType = {
-//                    "image/*"
-//            };
-//            uri = Uri.parse(update_image1);
-//            ClipData updateClips = new ClipData(null, mimeType, item1);
-//            updateClips.addItem(item2);
-//            updateClips.addItem(item3);
-//            this.clipData = updateClips;
 
         } else {
             System.out.println("오류 발생");
@@ -197,7 +186,7 @@ public class ForFragment extends Fragment {
             }
         }
     }
-    // Inflate the view for the fragment based on layout XML
+
     //이 기능은 롤리팝 이상부터 작동합니다.
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -206,6 +195,7 @@ public class ForFragment extends Fragment {
             ViewGroup container,
             Bundle savedInstanceState
     ) {
+        //레이아웃 지정
         View view = inflater.inflate(R.layout.fragment_four, container, false);
         imageURI = new Uri[3];
         imageClose = new ImageButton[3];
@@ -303,6 +293,7 @@ public class ForFragment extends Fragment {
 
         // EditText에 들어갈 내용
         content = (EditText)view.findViewById(R.id.content);
+        //id 값이 0보다 클때만 적용
         if(id > 0){
             content.setText(update_content);
         }else{
@@ -327,6 +318,7 @@ public class ForFragment extends Fragment {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //버그가 생겨서 고치기 위한 로그 뽑기
                 if(Year == null) {
                     Log.i("fragment", "날짜 정보가 없어 중지됨.");
                     Log.i("fragment", "" + Year);
@@ -410,7 +402,7 @@ public class ForFragment extends Fragment {
 
             }
         });
-        //룸을 사용하여 todo-db에 초기화 하고 다시만듬
+        //룸을 사용(todo-db를 사용한다는 의미)
         db = Room.databaseBuilder(getActivity(),AppDatabase.class, "todo-db").allowMainThreadQueries().build();
         return view;
     }

@@ -22,18 +22,20 @@ public class FirstFragment extends Fragment {
      LinearLayout focus;
      View view;
      int id;
-     String imgid , image1 ,image2, image3 , years, weather, content;
+     String image1 ,image2, image3 , years, weather, content;
      Float q1, q2 ,q3;
 
 
     public static class DataEvent {
 
         public final String helloEventBus;
-
+        //이벤트 버스를 사용하기 위한 메소드 만들기
+        //생성자 적용
         public DataEvent(String helloEventBus) {
             this.helloEventBus = helloEventBus;
         }
     }
+    //프래그먼트의 끝을 위한 메소드
     public void onDestroy(){
         super.onDestroy();
         EventBus.getDefault().unregister(this);
@@ -59,7 +61,7 @@ public class FirstFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
+        //수정 값을 확인하기 위한 값 입니다.
        if(id > 0) {
            System.out.println(years);
            System.out.println(weather);
@@ -92,7 +94,7 @@ public class FirstFragment extends Fragment {
                }
            });
 
-
+           //title에 담긴 값은 수정 날짜임
            year.setText(title);
            String dataString = title;
            EventBus.getDefault().post(new DataEvent(dataString));

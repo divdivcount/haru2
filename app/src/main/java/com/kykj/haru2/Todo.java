@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Todo {
+    //자동 ID를 할당
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     private float star_one;
     private float star_two;
     private float star_three;

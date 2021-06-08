@@ -24,7 +24,7 @@ public class SecondFragment extends Fragment {
     public static class DataEvent {
 
         public final String WeatherEventBus;
-
+        //4번째 프로그래먼트로 보내기 위한 데이타버스 이벤트 지정
         public DataEvent(String WeatherEventBus) {
             this.WeatherEventBus = WeatherEventBus;
         }
@@ -59,6 +59,7 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_second, container, false);
+        //텍스트뷰 지정
 
         son = (TextView)view.findViewById(R.id.son);
         rain = (TextView)view.findViewById(R.id.rain);
@@ -69,6 +70,7 @@ public class SecondFragment extends Fragment {
         last = (TextView)view.findViewById(R.id.last);
         end = (TextView)view.findViewById(R.id.end);
 
+        //이미지뷰 지정
         w_son = (ImageView)view.findViewById(R.id.w_son);
         w_rain = (ImageView)view.findViewById(R.id.w_rain);
         w_snow = (ImageView)view.findViewById(R.id.w_snow);
@@ -82,8 +84,9 @@ public class SecondFragment extends Fragment {
             public void onClick(View view) {
                 if(s == 1){
                     w_son.setVisibility(View.GONE);
-
+                    //날씨가 맞다면 왼쪽으로
                     last.setVisibility(View.GONE);
+                    //넘겨주세요
                     end.setVisibility(View.GONE);
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -91,8 +94,10 @@ public class SecondFragment extends Fragment {
                     lp.setMargins(0,40 ,0,0);
                     son.setLayoutParams(lp);
                     son.setText("•화창했어요");
+                    //폰트지정
                     Typeface typeface = getResources().getFont(R.font.spoqa_han_sans_neo_bold);
                     son.setTypeface(typeface);
+                    //px를 dp로 변환
                     son.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
 
                     rain.setVisibility(View.VISIBLE);
@@ -100,9 +105,9 @@ public class SecondFragment extends Fragment {
                     cloud.setVisibility(View.VISIBLE);
                     bunge.setVisibility(View.VISIBLE);
                     today_weather_two.setVisibility(View.VISIBLE);
-                    s = 0;
+                    s = 0; //다시 0으로 지정
                 }else{
-                    s = s + 1;
+                    s = s + 1; //선택 된 값
                     w_son.setVisibility(View.VISIBLE);
                     last.setVisibility(View.VISIBLE);
                     end.setVisibility(View.VISIBLE);
@@ -122,6 +127,7 @@ public class SecondFragment extends Fragment {
                     //폰트 지정
                     Typeface typeface = getResources().getFont(R.font.spoqa_han_sans_neo_bold);
                     son.setTypeface(typeface);
+                    //px를 dp로 변환
                     son.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 36);
 
                     rain.setVisibility(View.GONE);
@@ -134,6 +140,7 @@ public class SecondFragment extends Fragment {
                 }
             }
         });
+        //위와 같은 코드이므로 주석처리는 하지 않았습니다.
         rain.setOnClickListener(new View.OnClickListener() {
             int s = 0;
             @Override

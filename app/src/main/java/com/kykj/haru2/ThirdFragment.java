@@ -35,7 +35,7 @@ public class ThirdFragment extends Fragment {
 
 
 
-
+    //수정을 할때 받아야하는 값이 이쪽으로 넘어옴
     public static ThirdFragment newInstance(int page, float q1, float q2, float q3) {
         ThirdFragment fragment = new ThirdFragment();
         Bundle args = new Bundle();
@@ -63,6 +63,7 @@ public class ThirdFragment extends Fragment {
         q2 = (RatingBar)view.findViewById(R.id.q2);
         q3 = (RatingBar)view.findViewById(R.id.q3);
 
+        //newInstance에서 값을 뽑아 오기 위한 작업
         if (getArguments() != null) {
             update_q1 = getArguments().getFloat("q1");
             update_q2 = getArguments().getFloat("q2");
