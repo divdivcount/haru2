@@ -17,7 +17,6 @@ import org.greenrobot.eventbus.EventBus;
 
 
 public class FirstFragment extends Fragment {
-    // Store instance variables
      String title;
      EditText year;
      LinearLayout focus;
@@ -40,6 +39,7 @@ public class FirstFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
     //인수로 조각을 만들기위한 newInstance 생성자
+    //이곳은 수정을 위해 값을 받아 오는 곳 입니다.
     public static FirstFragment newInstance(int page, String title) {
         FirstFragment fragment = new FirstFragment();
         Bundle args = new Bundle();
@@ -49,14 +49,12 @@ public class FirstFragment extends Fragment {
         return fragment;
     }
 
-    // Store instance variables based on arguments passed
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
-    // Inflate the view for the fragment based on layout XML
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

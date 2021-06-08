@@ -419,22 +419,27 @@ public class ForFragment extends Fragment {
         if(imageURI[index] == null) {
             return;
         }
-        for(int i = index; i<3; i++) {
+        for(int i = index; i<3; i++) {//
             if(i == 2) {
+                //3개에서 2개로 됐을때 초기화 작업
                 imageURI[i] = null;
                 imageView[i].setImageResource(0);
                 imageFrame[i].setVisibility(View.GONE);
                 imageClose[index].setVisibility(View.GONE);
             } else {
                 if(imageURI[i] == null) {
+                    //없으면 멈춰야 합니다
                     break;
                 }
                 if(imageURI[i+1] == null) {
+                    //2번째가 null
+                    //2번째 부분 초기화
                     imageURI[i] = null;
                     imageView[i].setImageResource(0);
                     imageFrame[i].setVisibility(View.GONE);
                     imageClose[index].setVisibility(View.GONE);
                 } else {
+                    //두번째가 있다는 의미
                     imageURI[i] = imageURI[i+1];
                     imageView[i].setImageURI(imageURI[i+1]);
                 }

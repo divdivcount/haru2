@@ -30,11 +30,14 @@ public class Setting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
         getSupportActionBar().setElevation(0);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // 툴바의 홈버튼의 이미지를 변경
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
+        //룸을 사용하기 위한 초기화(todo-db를 사용한다는 뜻과 같습니다.)
         db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "todo-db").allowMainThreadQueries().build();
         Integer date;
+        //레이아웃 정의
         backup_restore = (LinearLayout)findViewById(R.id.backup_restore);
         export = (LinearLayout)findViewById(R.id.export);
         opinion = (LinearLayout)findViewById(R.id.opinion);
@@ -42,6 +45,7 @@ public class Setting extends AppCompatActivity {
         friend_share = (LinearLayout)findViewById(R.id.friend_share);
         all_delete = (LinearLayout)findViewById(R.id.all_delete);
 
+        //스위치 정의
         password = (Switch)findViewById(R.id.password);
         alram = (Switch)findViewById(R.id.alram);
         setting_day = (TextView)findViewById(R.id.setting_day);
@@ -107,9 +111,8 @@ public class Setting extends AppCompatActivity {
                         }else{
                             db.todoDao().all_delete();
                             Toast.makeText(Setting.this,"모든 노트를 삭제했어요! :(",Toast.LENGTH_SHORT).show();
-                            //메인 엑티비티 리무브뷰 해야 합니다.
 
-                            //이런식으로 하면 삭제시 메인으로 돌아가게 됩니다...
+                            //삭제시 메인으로 돌아가게 됩니다.
                             Intent refresh = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(refresh);
                             Setting.this.finish();

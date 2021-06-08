@@ -1,8 +1,6 @@
 package com.kykj.haru2;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -24,7 +22,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -35,7 +32,6 @@ import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -56,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+    //ROOM은 롤리팝 이상 버전에서 사용 가능 합니다.
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +61,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //툴바를 타이틀, 배경을 화이트로 지정한 부분
        toolbar.setBackgroundColor(getResources().getColor(R.color.Actionbar));
        toolbar.setTitleTextColor(getResources().getColor(R.color.Actionbar));
         layout = (LinearLayout)findViewById(R.id.layout);
 
+        //룸을 사용하기 위한 초기화(todo-db를 사용한다는 뜻과 같습니다.)
         db = Room.databaseBuilder(this,AppDatabase.class, "todo-db").allowMainThreadQueries().build();
         try {
             fetch();
@@ -102,14 +100,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressLint({"WrongConstant", "NewApi"})
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void fetch(){
 
         Uri uri1;
         List<Todo> list = (List<Todo>) db.todoDao().getAll();
 
-        //전체를 감싸는 리스트뷰 혹은 그리드뷰로 혹은 스크롤뷰(리니어로 감싸서 하나로 넣기)
+        //전체를 감싸는 스크롤뷰(리니어로 감싸서 하나로 넣기)
         ScrollView scrollView = new ScrollView(this);
         scrollView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT ,ViewGroup.LayoutParams.WRAP_CONTENT));
 

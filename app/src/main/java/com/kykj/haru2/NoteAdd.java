@@ -1,12 +1,10 @@
 package com.kykj.haru2;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,13 +13,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
-
-import org.greenrobot.eventbus.EventBus;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import me.relex.circleindicator.CircleIndicator;
 
 
 public class NoteAdd extends AppCompatActivity {
