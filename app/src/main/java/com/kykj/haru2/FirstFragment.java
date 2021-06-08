@@ -97,6 +97,7 @@ public class FirstFragment extends Fragment {
            String dataString = title;
            EventBus.getDefault().post(new DataEvent(dataString));
            onDestroy();
+           //html.fromhtml를 사용하여 스몰태그를 사용
            year.setOnTouchListener(new View.OnTouchListener() {
                @Override
                public boolean onTouch(View view, MotionEvent motionEvent) {
