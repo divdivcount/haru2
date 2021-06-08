@@ -293,7 +293,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     catch (Throwable tr) {
 
-                        // Show message to try again
                     }
 
                 //전체 리니어 정의
