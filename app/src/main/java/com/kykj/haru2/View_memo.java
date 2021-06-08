@@ -61,6 +61,7 @@ public class View_memo extends AppCompatActivity {
         db = Room.databaseBuilder(this,AppDatabase.class, "todo-db").allowMainThreadQueries().build();
         try {
             if(fetch()) {
+                // fetch를 했을 때 db 또는 ForFragment에서 값 불러오기가 성공하였을 경우에만 draw
                 draw();
             }
         } catch (Exception e) {
@@ -74,6 +75,7 @@ public class View_memo extends AppCompatActivity {
 
 
     private void drawWeather(String weather) {
+        // view_weather에 받은 문자열에 따라 아이콘 등록
         if (weather.equals("화창했어요.")) {
             view_weather.setImageResource(R.drawable.w_s_son);
         } else if (weather.equals("비가 왔어요.")) {
@@ -87,14 +89,17 @@ public class View_memo extends AppCompatActivity {
         }
     }
     private void drawRating(float q1, float q2, float q3) {
+        // rating 바 업데이트
         start1.setRating(q1);
         start2.setRating(q2);
         start3.setRating(q3);
     }
     private void drawImages(String image1, String image2, String image3) {
+        // 이미지 슬라이드 그리기
         int currentImageLength = 0;
         try {
             if(image1 != null && image2 != null && image3 != null) {
+                // 이미지가 3개인 경우
                 currentImageLength = 3;
                 Uri uri1 = Uri.parse(image1);
                 Uri uri2 = Uri.parse(image2);
@@ -106,6 +111,7 @@ public class View_memo extends AppCompatActivity {
                 //비트맵으로 DECODE
                 mSelectedPhotoBmp = new Bitmap[]{BitmapFactory.decodeStream(input), BitmapFactory.decodeStream(input2), BitmapFactory.decodeStream(input3)};
             } else if(image1 != null && image2 != null) {
+                // 이미지가 2개인 경우
                 currentImageLength = 2;
                 Uri uri1 = Uri.parse(image1);
                 Uri uri2 = Uri.parse(image2);
@@ -113,6 +119,7 @@ public class View_memo extends AppCompatActivity {
                 InputStream input2 = this.getContentResolver().openInputStream(uri2);
                 mSelectedPhotoBmp = new Bitmap[]{BitmapFactory.decodeStream(input), BitmapFactory.decodeStream(input2)};
             } else if(image1 != null) {
+                // 이미지가 1개인 경우
                 currentImageLength = 1;
                 Uri uri1 = Uri.parse(image1);
                 //이미지의 CONTENT://주소를 스트림 주소로 변경
@@ -184,7 +191,7 @@ public class View_memo extends AppCompatActivity {
     private boolean fetch() {
         Intent intent = getIntent();
         int id = intent.getIntExtra("View_id", 0);
-        //만약 id 값이 0이면 Intent에서 정보 추출, 0 이상이면 아이디값으로 불러온 쿼리의 값으로 출력해야함
+        // id(getIntExtra)가 0보다 크면 MainActivity에서 넘어온 것이고 아니면 ForFragment에서 넘어온 것이다.
         if(id > 0) {
             this.id = id;
             List<Todo> list = getList(id);
@@ -210,6 +217,7 @@ public class View_memo extends AppCompatActivity {
             image3 = intent.getStringExtra("setImgname3");
             content = intent.getStringExtra("content");
             if(year == null && weather == null && id == 0) {
+                // id, year, weather 값이 넘어오지 않아서 false 리턴
                 return false;
             }
         }

@@ -161,13 +161,17 @@ public class ForFragment extends Fragment {
     }
 
     private void changeImage() {
+        // 아무런 매개변수가 없으면 imageView 3개를 모두 초기화
         for(int i=0; i<3; i++) {
             imageView[i].setImageResource(0);
             imageURI[i] = null;
         }
     }
     private void changeImage(Uri uri1, Uri uri2, Uri uri3) {
+        // 새 사진으로 바꾸기에 앞서 3개를 초기화
         this.changeImage();
+        // 이미지가 1개일 때는 changeImage(uri, null, null)
+        // 초기화 한 영역에 다시 1번부터 3번까지 차례로 이미지 등록
         if(uri1 != null) {
             imageView[0].setImageURI(uri1);
             imageFrame[0].setVisibility(View.VISIBLE);
@@ -184,11 +188,13 @@ public class ForFragment extends Fragment {
             imageURI[2] = uri3;
         }
     }
-    private void changeImage(ClipData chip) {
+    private void changeImage(ClipData clip) {
+        // 새 사진으로 바꾸기에 앞서 3개를 초기화
         this.changeImage();
-        int chipSize = chip.getItemCount();
-        for(int i=0; i<chipSize; i++) {
-            Uri uri = chip.getItemAt(i).getUri();
+        // 초기화 한 영역에 다시 1번부터 clip의 개수만큼(최대 3개) 차례로 이미지 등록
+        int clipSize = clip.getItemCount();
+        for(int i=0; i<clipSize && i<3; i++) {
+            Uri uri = clip.getItemAt(i).getUri();
             imageView[i].setImageURI(uri);
             imageFrame[i].setVisibility(View.VISIBLE);
             imageURI[i] = uri;
@@ -197,54 +203,22 @@ public class ForFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // 사진 선색 창에서 돌아옴
+        // 사진 선택 창에서 돌아올 때 실행되는 메서드입니다.
         if(requestCode == PICTURE_REQUEST_CODE) {
+            // 사진 선택에 성공했습니다.
             if (resultCode == RESULT_OK) {
-                //기존 이미지 지우기
-                this.changeImage();
-                //image1.setImageResource(0);
-                //image2.setImageResource(0);
-                //image3.setImageResource(0);
-
                 //ClipData 또는 Uri를 가져온다
                 Uri uri = data.getData();
                 ClipData clipData = data.getClipData();
                 //이미지 URI 를 이용하여 이미지뷰에 순서대로 세팅한다.
                 if(clipData != null) {
-                    System.out.println("사진 여러장.");
+                    // clipData가 null이 아니라는 것은 사진이 1장보다 많다는 것을 의미합니다.
                     this.changeImage(clipData);
-                    /* 위 코드로 대체
-                    for(int i = 0; i < 3; i++) {
-                        if(i<clipData.getItemCount()) {
-                            imageURI[i] = clipData.getItemAt(i).getUri();
-                            //urione =  clipData.getItemAt(i).getUri();
-                            switch (i) {
-                                case 0:
-                                image1.setImageURI(urione);
-                                one_frame.setVisibility(View.VISIBLE);
-                                break;
-                                case 1:
-                                image2.setImageURI(urione);
-                                two_frame.setVisibility(View.VISIBLE);
-                                break;
-                                case 2:
-                                image3.setImageURI(urione);
-                                three_frame.setVisibility(View.VISIBLE);
-                                //ibn1.setVisibility(View_memo.GONE);
-                                break;
-                            }
-                        }
-                    }
-                    */
                 } else if(uri != null) {
-                    System.out.println("사진1장.");
+                    // clipData는 null이었지만 uri는 null이 아니라면 사진 1개만은 넘어왔다는 것을 의미합니다.
                     this.changeImage(uri, null, null);
-                    /* 위 코드로 대체
-                    image1.setImageURI(uri);
-                    one_frame.setVisibility(View.VISIBLE);
-                    */
                 } else {
-                    System.out.println("사진없음.");
+                    // 사진을 아무것도 선택하지 않고 확인 버튼을 클릭해 돌아왔다면 기존 사진을 없애겠다는 뜻으로 간주합니다.
                     this.changeImage();
                 }
             }
@@ -265,11 +239,6 @@ public class ForFragment extends Fragment {
         imageClose[0] = (ImageButton) view.findViewById(R.id.one_close);
         imageClose[1] = (ImageButton) view.findViewById(R.id.two_close);
         imageClose[2] = (ImageButton) view.findViewById(R.id.three_close);
-        /*
-        one_close = (ImageButton) view.findViewById(R.id.one_close);
-        two_close = (ImageButton) view.findViewById(R.id.two_close);
-        three_close = (ImageButton) view.findViewById(R.id.three_close);
-        */
 
         ibn1 = (LinearLayout)view.findViewById(R.id.ibn1);
         btn1 = (Button)view.findViewById(R.id.btn1);
@@ -278,33 +247,28 @@ public class ForFragment extends Fragment {
         imageFrame[0] = (FrameLayout) view.findViewById(R.id.one_frame);
         imageFrame[1] = (FrameLayout) view.findViewById(R.id.two_frame);
         imageFrame[2] = (FrameLayout) view.findViewById(R.id.three_frame);
-        /*
-        one_frame = (FrameLayout)view.findViewById(R.id.one_frame);
-        two_frame = (FrameLayout)view.findViewById(R.id.two_frame);
-        three_frame = (FrameLayout)view.findViewById(R.id.three_frame);
-        */
+
         imageView = new ImageView[3];
         imageView[0] = (ImageView) view.findViewById(R.id.first_img);
         imageView[1] = (ImageView) view.findViewById(R.id.second_img);
         imageView[2] = (ImageView) view.findViewById(R.id.third_img);
-        /*
-        image1 = (ImageView)view.findViewById(R.id.first_img);
-        image2 = (ImageView)view.findViewById(R.id.second_img);
-        image3 = (ImageView)view.findViewById(R.id.third_img);
-        */
+
         //이미지 배경 및 이미지 저장
         //setClipToOutline 하는 이유 xml에서는 불가능하지만 자바에서 이 설정을 하면 내가 만들어둔 배경(xml)으로 적용할 수 있음
         GradientDrawable drawable = (GradientDrawable) getResources().getDrawable(R.drawable.shape2);
         for(int i=0; i<3; i++) {
+            // imageView 3개 초기화
             imageView[i].setBackground(drawable);
             imageView[i].setClipToOutline(true);
             //사진을 길게 클릭시 삭제버튼이 생기고 x버튼을 클릭시 삭제 가능
             final ImageButton targetCloseButton = imageClose[i];
             final int currentIndex = i;
+            // imageView 3개에 이벤트 리스너를 등록합니다.
             imageView[i].setOnLongClickListener(new View.OnLongClickListener() {
                 final ImageButton closeButton = targetCloseButton;
                 @Override
                 public boolean onLongClick(View view) {
+                    // 현재 사진이 가리키는 closeButton을 표시
                     closeButton.setVisibility(View.VISIBLE);
                     return false;
                 }
@@ -313,28 +277,22 @@ public class ForFragment extends Fragment {
                 final int index = currentIndex;
                 @Override
                 public void onClick(View view) {
+                    // 이 버튼이 가리키는 번호의 이미지를 삭제
                     dropImage(index);
-                    //ibn1.setVisibility(View_memo.VISIBLE);
                 }
             });
         }
-        /*
-        image1.setBackground(drawable);
-        image1.setClipToOutline(true);
-        image2.setBackground(drawable);
-        image2.setClipToOutline(true);
-        image3.setBackground(drawable);
-        image3.setClipToOutline(true);
-        */
         this.changeImage();
         // 이미지
         if(id > 0) {
+            // 기존 이미지를 수정하는 경우
             try {
               /*
                 InputStream input = getActivity().getContentResolver().openInputStream(Uri.parse(update_image1));
                 //비트맵으로 DECODE
                 Bitmap mSelectedPhotoBmp = BitmapFactory.decodeStream(input);
-  */
+              */
+                // getExtra로 받은 update_image String을 uri로 변환하고 사진 뷰어에 등록
                 Uri image1URI = !update_image1.equals("") ? Uri.parse(update_image1) : null;
                 Uri image2URI = !update_image2.equals("") ? Uri.parse(update_image2) : null;
                 Uri image3URI = !update_image3.equals("") ? Uri.parse(update_image3) : null;
@@ -343,31 +301,13 @@ public class ForFragment extends Fragment {
                         image2URI,
                         image3URI
                 );
-                // 위 코드로 대체
-                //image2.setImageURI(Uri.parse(update_image2));
-                //image3.setImageURI(Uri.parse(update_image3));
-                /*
-                if(update_image1 != null && update_image2.equals("") && update_image3.equals("")) {
-                    one_frame.setVisibility(View.VISIBLE);
-                } else if(update_image1 != null && update_image2 != null && update_image3.equals("")) {
-                    one_frame.setVisibility(View.VISIBLE);
-                    two_frame.setVisibility(View.VISIBLE);
-                } else if(update_image1 != null && update_image2 != null && update_image3 != null) {
-                    one_frame.setVisibility(View.VISIBLE);
-                    two_frame.setVisibility(View.VISIBLE);
-                    three_frame.setVisibility(View.VISIBLE);
-                }
-                */
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
+            // 새로 등록하는 경우
             this.changeImage();
-            /* 위 코드로 대체
-            image1.setImageResource(0);
-            image2.setImageResource(0);
-            image3.setImageResource(0);
-            */
         }
 
 
@@ -396,41 +336,6 @@ public class ForFragment extends Fragment {
             content.setText("");
         }
 
-/*
-        image2.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                two_close.setVisibility(View.VISIBLE);
-                return false;
-            }
-        });
-        two_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                image2.setImageResource(0);
-                two_frame.setVisibility(View.GONE);
-                two_close.setVisibility(View.GONE);
-               // ibn1.setVisibility(View_memo.VISIBLE);
-            }
-        });
-
-        image3.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                three_close.setVisibility(View.VISIBLE);
-                return false;
-            }
-        });
-        three_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                image3.setImageResource(0);
-                three_frame.setVisibility(View.GONE);
-                three_close.setVisibility(View.GONE);
-                //ibn1.setVisibility(View_memo.VISIBLE);
-            }
-        });
-*/
         //뷰 터치시 키보드 아래로 내리기
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -537,6 +442,7 @@ public class ForFragment extends Fragment {
         return view;
     }
     private void dropImage(int index) {
+        // 이미지뷰어 3개에서 해당 index의 이미지를 삭제하고 배열 최신화
         if(imageURI[index] == null) {
             return;
         }
