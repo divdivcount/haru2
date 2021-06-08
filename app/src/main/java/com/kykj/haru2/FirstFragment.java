@@ -1,14 +1,8 @@
 package com.kykj.haru2;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import java.util.regex.Pattern;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -19,12 +13,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import org.greenrobot.eventbus.EventBus;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class FirstFragment extends Fragment {
     // Store instance variables

@@ -2,33 +2,16 @@ package com.kykj.haru2;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.net.URI;
-import java.util.*;
-import android.os.DropBoxManager;
-import android.os.Environment;
-import android.provider.BaseColumns;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -45,35 +28,25 @@ import android.widget.Toast;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import java.io.File;
-import java.util.List;
+
 
 import static android.app.Activity.RESULT_OK;
 
 public class ForFragment extends Fragment {
+
     private final int PICTURE_REQUEST_CODE = 200;
     private AppDatabase db;
-    // Store instance variables
-
-
     private Uri[] imageURI;
     private ImageView[] imageView;
     private FrameLayout[] imageFrame;
     private ImageButton[] imageClose;
-
-    // activity(fragment) components
     private LinearLayout ibn1;
-    //private ImageView image1,image2,image3;
-    //private FrameLayout one_frame,two_frame,three_frame;
     private EditText content;
     private Button btn1;
-    //private ImageButton one_close, two_close, three_close;
-
     private float startTotal,startTotal2,startTotal3;
-    private String result,result2,page, Year, Weather;
-    //private Uri uri, urione;
-    //private ClipData clipData;
+    private String Year, Weather;
     int id;
+
     String update_image1 , update_image2, update_image3, update_content;
 
 

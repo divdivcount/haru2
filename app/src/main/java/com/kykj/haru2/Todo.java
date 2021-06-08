@@ -111,11 +111,6 @@ public class Todo {
         this.imgname3 = imgname3;
     }
 
-//    public Todo(String content, String weather, float star) {
-//        this.content = content;
-//        this.weather = weather;
-//        this.star = star;
-//    }
 
 
     @Override

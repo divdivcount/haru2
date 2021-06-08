@@ -6,10 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.RatingBar;
-
-
 import org.greenrobot.eventbus.EventBus;
 
 public class ThirdFragment extends Fragment {

@@ -1,37 +1,28 @@
 package com.kykj.haru2;
 
 import android.graphics.Typeface;
-import android.graphics.fonts.Font;
 import android.os.Build;
 import android.os.Bundle;
-
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import org.greenrobot.eventbus.EventBus;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class SecondFragment extends Fragment {
-    // Store instance variables
-//    private Spinner spinner;
-//    private static final String[] menu = new String[]{"•화창했어요", "•비가 왔어요", "•구름이 많았어요","•눈이 왔어요","•천둥번개가 쳤어요"};
+
+
     private TextView today_weather_two ,son, rain, snow, cloud, bunge, last, end;
     private ImageView w_son, w_rain, w_snow, w_cloud, w_bunge;
-    // newInstance constructor for creating fragment with arguments
+
     public static class DataEvent {
 
         public final String WeatherEventBus;
@@ -65,7 +56,7 @@ public class SecondFragment extends Fragment {
 
     }
 
-    // Inflate the view for the fragment based on layout XML
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -371,24 +362,6 @@ public class SecondFragment extends Fragment {
             }
 
         });
-
-
-//        spinner = (Spinner)view.findViewById(R.id.txt_question_type);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item, menu);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setAdapter(adapter);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View_memo view, int position, long id) {
-//                Toast.makeText(getActivity(),Integer.toString(position),Toast.LENGTH_SHORT); //본인이 원하는 작업.
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
 
         return view;
     }

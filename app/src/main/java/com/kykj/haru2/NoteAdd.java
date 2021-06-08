@@ -64,13 +64,13 @@ public class NoteAdd extends AppCompatActivity {
             this.intent = intent;
         }
 
-        // Returns total number of pages
+
         @Override
         public int getCount() {
             return NUM_ITEMS;
         }
 
-        // Returns the fragment to display for that page
+
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public Fragment getItem(int position) {
@@ -123,7 +123,7 @@ public class NoteAdd extends AppCompatActivity {
             }
         }
 
-        // Returns the page title for the top indicator
+
         @Override
         public CharSequence getPageTitle(int position) {
             return "Page " + position;
@@ -132,17 +132,15 @@ public class NoteAdd extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.submenu, menu);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.w_close) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
