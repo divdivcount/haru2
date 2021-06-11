@@ -79,7 +79,7 @@ public class FirstFragment extends Fragment {
                System.out.println("오류 발생");
            }
            //레이아웃지정
-           view = inflater.inflate(R.layout.fragment_first, container, false);
+                   view = inflater.inflate(R.layout.fragment_first, container, false);
            year = (EditText) view.findViewById(R.id.year);
 
            focus = (LinearLayout) view.findViewById(R.id.focus);

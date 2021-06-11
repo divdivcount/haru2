@@ -143,15 +143,7 @@ public class View_memo extends AppCompatActivity {
             final int imageLength = lastImageLength;
             @Override
             public int getCount() {
-                /*
-                if (imgid.equals("one_image")) {
-                    imgCount = new String[]{todo.getImgname1()};
-                } else if (imgid.equals("two_image")) {
-                    imgCount = new String[]{todo.getImgname1(), todo.getImgname2()};
-                } else if (imgid.equals("three_image")) {
-                    imgCount = new String[]{todo.getImgname1(), todo.getImgname2(), todo.getImgname3()};
-                }
-                return imgCount.length;*/
+
                 return imageLength;
             }
 
@@ -163,11 +155,15 @@ public class View_memo extends AppCompatActivity {
             @NonNull
             @Override
             public Object instantiateItem(@NonNull ViewGroup container, int position) {
+                //view 의 정의를 실제 view 객체로 만드는 역할
                 inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                //R.layout.slider_image에 적용
                 View view = inflater.inflate(R.layout.slider_image, container, false);
+                //이미지 뷰에 대한 셋팅
                 ImageView imageView = view.findViewById(R.id.slider_image);
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY); // 새로 추가/수정 일때만 있엇던 것
                 imageView.setImageBitmap(mSelectedPhotoBmp[position]);
+                //컨테이너에 적용()
                 container.addView(view);
                 return view;
             }
@@ -179,8 +175,10 @@ public class View_memo extends AppCompatActivity {
         };
         ViewPager viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
+        //라이브러리 CircleIndicator
         CircleIndicator indicator;
         indicator = findViewById(R.id.indicator);
+        //갯수에 맞게 지정하기위해 인디케이터에 뷰페이저를 적용
         indicator.setViewPager(viewPager);
     }
     private List<Todo> getList(int id) {
@@ -245,7 +243,7 @@ public class View_memo extends AppCompatActivity {
             startActivity(intent);
             return true;
         } else if(menu_id == R.id.view_update) {
-            //id를 first쪽으로 보낸다
+            //모든 자료를 NoteAdd쪽으로 보낸다
             Intent intent = new Intent(getApplicationContext(), NoteAdd.class);
             intent.putExtra("id", id);
             intent.putExtra("year", year);
@@ -259,6 +257,7 @@ public class View_memo extends AppCompatActivity {
             intent.putExtra("image3", image3);
             startActivity(intent);
         }else if(menu_id == R.id.view_delete){
+            //삭제쿼리 실행
             db.todoDao().Selectdelete(id);
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             this.finish();

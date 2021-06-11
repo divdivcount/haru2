@@ -35,11 +35,11 @@ public class SecondFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
-    //두번째 프래그먼트 만드는 인스텐스
+    //이곳에서는 딱히 수정할 필요가 없게 느껴져서 값을 받아오지만 적용하지 않았습니다.
+    //page 2, title "프래그먼트2"
     public static SecondFragment newInstance(int page, String title) {
         SecondFragment fragment = new SecondFragment();
         Bundle args = new Bundle();
-        // 임시 값 넘기는 것이라 안보셔도 됩니다.
         args.putInt("someInt", page);
         args.putString("someTitle", title);
         fragment.setArguments(args);
