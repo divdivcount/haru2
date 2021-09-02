@@ -182,12 +182,12 @@ public class MainActivity extends AppCompatActivity {
                             imageView = new ImageView(this);
                             //이미지 적용
                             imageView.setImageBitmap(mSelectedPhotoBmp);
-                            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                             //px를 dp로 변경
-                            final int Imgwidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 372, getResources().getDisplayMetrics());
-                            final int Imgheight = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, getResources().getDisplayMetrics());
-                            imageView.getLayoutParams().width = Imgwidth;
-                            imageView.getLayoutParams().height = Imgheight;
+//                            final int Imgwidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 372, getResources().getDisplayMetrics());
+//                            final int Imgheight = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, getResources().getDisplayMetrics());
+//                            imageView.getLayoutParams().width = Imgwidth;
+//                            imageView.getLayoutParams().height = Imgheight;
                             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                             GradientDrawable drawable = (GradientDrawable) getDrawable(R.drawable.shape2);
                             imageView.setBackground(drawable);
